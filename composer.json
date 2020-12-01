@@ -16,7 +16,6 @@
         }
     },
     "require": {
-        "php": "^8.0",
         "psr/http-message": "^1.0",
         "payload-interop/payload-interop": "^1.0"
     },

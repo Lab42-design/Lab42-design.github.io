@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f59c7c7fd9f2f218fb62ba49dce492a",
+    "content-hash": "02e2e5b72f3d54e608344dc41e0276b7",
     "packages": [
         {
             "name": "payload-interop/payload-interop",
@@ -97,9 +97,7 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {
-        "php": "^8.0"
-    },
+    "platform": [],
     "platform-dev": [],
     "plugin-api-version": "2.0.0"
 }
