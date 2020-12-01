@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0dc2f1f2a1be9b6c603ee018549a586",
+    "content-hash": "8f59c7c7fd9f2f218fb62ba49dce492a",
     "packages": [
         {
             "name": "payload-interop/payload-interop",
