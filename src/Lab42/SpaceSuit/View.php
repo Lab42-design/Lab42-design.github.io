@@ -109,8 +109,6 @@ class View
             throw new ViewException(sprintf('View file not found. (%s)', $name));
         }
 
-        // extract( (array) $this->payload);
-
         ob_start();
         if ($this->isReadable($name)) {
             $this->enclose($name);
@@ -125,6 +123,10 @@ class View
      */
     protected function isReadable($__FILE__): bool
     {
+        if (!is_readable($__FILE__)) {
+            throw new ViewException(sprintf('View is not readable. (%s)', $__FILE__));
+        }
+
         return is_readable($__FILE__);
     }
 
