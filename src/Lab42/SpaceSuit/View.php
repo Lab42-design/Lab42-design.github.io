@@ -3,7 +3,7 @@
 /**
  *
  * render simple two-step views
- * based on aura/view
+ * based loosly on aura/view
  *
  */
 
