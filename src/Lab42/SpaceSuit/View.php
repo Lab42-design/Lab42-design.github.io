@@ -138,7 +138,6 @@ class View
         if ($secure === true) {
             $content = (string) $content;
             return htmlspecialchars($content, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', true);
-            // return htmlentities($content);
         } else {
             return $content;
         }
