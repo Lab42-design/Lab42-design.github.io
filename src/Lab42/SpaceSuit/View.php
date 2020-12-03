@@ -23,7 +23,7 @@ class View
     /**
      * partial view
      */
-    private $view;
+    private string $view;
 
     /**
      * main layout
@@ -33,7 +33,7 @@ class View
     /**
      * payload for views
      */
-    private $payload;
+    private object $payload;
 
     public function __construct()
     {
@@ -50,7 +50,18 @@ class View
         // TOFO
         $layout = $this->getLayout();
 
-        // if ($layout === '' || $layout === null) {
+        /*
+
+        if ($condition) {
+    $result = 'foo' 
+} else {
+    $result = 'bar'
+}
+You can write this:
+
+$result = $condition ? 'foo' : 'bar';
+
+        */
         if (! $layout) {
             return $this->getContent();
         }
@@ -135,7 +146,7 @@ class View
         require $__FILE__;
     }
 
-    protected function esc($content, $secure = true): string
+    protected function esc($content, bool $secure = true): string
     {
         if ($secure === true) {
             $content = (string) $content;
