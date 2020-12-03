@@ -17,7 +17,8 @@
     },
     "require": {
         "psr/http-message": "^1.0",
-        "payload-interop/payload-interop": "^1.0"
+        "payload-interop/payload-interop": "^1.0",
+        "pmjones/auto-route": "^1.1"
     },
     "scripts": {
         "serve": "@php ./bin/serve.php"
