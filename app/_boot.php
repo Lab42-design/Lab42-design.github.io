@@ -3,20 +3,15 @@
 /**
  *
  * boot script
- * using Psr7 Request, Response, Payload and View
+ * using Psr7 Request, Response, Payload, View and Emitter
  *
  */
 
 declare(strict_types = 1);
 
-
-
-/**
- * use
- */
-
 use Lab42\Http\ServerRequest\ServerRequestCreator;
 use Lab42\Http\Response\HtmlResponse;
+use Lab42\Http\Emitter\SapiEmitter as Emitter;
 use Lab42\Domain\{Payload, Status};
 use Lab42\SpaceSuit\View;
 
@@ -85,52 +80,16 @@ $response = new HtmlResponse(
 /**
  * emit response
  */
-// echo($response->getBody()->getContents());
-
-use Lab42\Http\Emitter\SapiEmitter;
-
-$emitter = new SapiEmitter();
+$emitter = new Emitter();
 $emitter->emit($response);
 
 
 
+/**
+ * echo response
+ */
+// echo($response->getBody()->getContents());
+
+
+
 // eof
-
-
-
-
-
-/*
-//
-use Lab42\Router\RouteCollector;
-
-//
-$handlerFn = fn(): ResponseInterface => new Response();
-
-$handler = handler();
-function handler(){
-    $response = new HtmlResponse(__FUNCTION__ . '3253245345345 sdfgdfsgdf');
-    print_r($response->getBody()->getContents());
-}
-
-//
-$router = new RouteCollector();
-
-$router->get('home', '/', $handler);
-$router->get('mikka', '/mikka', $handlerFn);
-
-$router->get('zorro', '/zorro', App\Action::class);
-
-if (!$route = $router->routes()->match($request, false)) {
-    // 404 Not Found
-    echo '404';
-};
-
-if (!$route->isAllowedMethod($request->getMethod())) {
-    echo '405';
-};
-
-// 200 OK
-return $route;
-*/
-
