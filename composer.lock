@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb6956feafa741b26b3749f9a696539a",
+    "content-hash": "d9c36c0a0c78674fa76ecb7f259cdd61",
     "packages": [
         {
             "name": "payload-interop/payload-interop",
@@ -138,6 +138,49 @@
                 "source": "https://github.com/php-fig/http-message/tree/master"
             },
             "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
+            "name": "r0mdau/jisly",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/r0mdau/jisly.git",
+                "reference": "5558184d96306c54fe1ae3f5673880d588194dd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/r0mdau/jisly/zipball/5558184d96306c54fe1ae3f5673880d588194dd3",
+                "reference": "5558184d96306c54fe1ae3f5673880d588194dd3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "malukenho/docheader": "^0.1.7",
+                "phpstan/phpstan": "^0.9.2",
+                "phpstan/phpstan-strict-rules": "^0.9.0",
+                "phpunit/phpunit": "^7.0",
+                "satooshi/php-coveralls": "^2.0",
+                "squizlabs/php_codesniffer": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jisly\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Light NoSQL database, JSON file data storing",
+            "homepage": "https://github.com/r0mdau/jisly",
+            "support": {
+                "issues": "https://github.com/r0mdau/jisly/issues",
+                "source": "https://github.com/r0mdau/jisly/tree/2.0.0"
+            },
+            "time": "2018-03-24T10:45:58+00:00"
         }
     ],
     "packages-dev": [],

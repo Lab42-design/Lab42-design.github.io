@@ -12,28 +12,75 @@ declare(strict_types = 1);
 
 
 
+$database = new Lab42\DarkMatter\Database(realpath(__DIR__).'/../_tmp/_darkmatter/');
+
+$collection = 'projects';
+
+$database->collection($collection);
+
+
 $payload = [
-    "title" => "json title", 
-    "subtitle" => "json subtitle",
-    "body" => "4325435 34565436547 768675867 8968795678 5e6565436 4352345345 235345435 2345342543",
-    "slug" => "json-slug",
-    "status" => "STATUS_42",
+    "title" => "jsondocument", 
+    "subtitle" => "jsondocument subtitle",
+    "slug" => "jsondocument-title",
+    "content" => [
+        "status" => "STATUS_42",
+        "message" => "jsondocument"
+    ],
+    "tags" => [
+        "design",
+        "music",
+        "art",
+        "42"
+    ],
     "published" => true
 ];
 
+// $successBool = $database->collection($collection)->insert($payload);
+
+
+
+$results = $database->collection($collection)->find(["tags" => ["globe","circle","round","world"]]);
+
+echo '<pre>';
+print_r($results);
+
+
+
+
+
+
+
+
+
+
+
+// print_r($database);
+
+
+
+
+
+//
 
 define('LAZER_DATA_PATH', realpath(__DIR__).'/../_tmp/_database/'); //Path to folder with tables
 
 use Lab42\Database\Database as Lazer;
 
-/*
 Lazer::create('lazarus', 
+
 array(
     'id' => 'integer',
     'nickname' => 'string'
-));
-*/
+)
 
+);
+
+try{
+    \Lab42\Database\Helpers\Validate::table('lazarus')->exists();
+} catch(\Lab42\Database\DatabaseException $e){
+    //Database doesn't exist
+}
 
 $row = Lazer::table('lazarus');
 
@@ -51,33 +98,6 @@ foreach($zzz as $row)
 {
     print_r($row);
 }
-
-
-
-
-
-
-/*
-Lazer::create('projects', array(
-    'title' => 'string',
-    'subtitle' => 'string',
-    "body" => "string",
-    'slug' => 'string',
-    'status' => 'string',
-    'status' => 'string',
-    "published" => 'boolean'
-));
-*/
-
-
-$row = Lazer::table('projects');
-
-$row->set($payload);
-$row->save();
-
-
-
-
 
 
 
