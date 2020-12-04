@@ -11,6 +11,79 @@ declare(strict_types = 1);
 
 
 
+
+$payload = [
+    "title" => "json title", 
+    "subtitle" => "json subtitle",
+    "body" => "4325435 34565436547 768675867 8968795678 5e6565436 4352345345 235345435 2345342543",
+    "slug" => "json-slug",
+    "status" => "STATUS_42",
+    "published" => true
+];
+
+
+define('LAZER_DATA_PATH', realpath(__DIR__).'/../_tmp/_database/'); //Path to folder with tables
+
+use Lab42\Database\Database as Lazer;
+
+/*
+Lazer::create('lazarus', 
+array(
+    'id' => 'integer',
+    'nickname' => 'string'
+));
+*/
+
+
+$row = Lazer::table('lazarus');
+
+//$row->nickname = 'defaultman'; // or $row->setField('nickname', 'new_user')
+//$row->save();
+echo '<pre>';
+$result = Lazer::table('lazarus')->findAll();
+foreach($result as $row)
+{
+    print_r($row);
+}
+
+$zzz = Lazer::table('lazarus')->where('id', '=', 1)->findAll();
+foreach($zzz as $row)
+{
+    print_r($row);
+}
+
+
+
+
+
+
+/*
+Lazer::create('projects', array(
+    'title' => 'string',
+    'subtitle' => 'string',
+    "body" => "string",
+    'slug' => 'string',
+    'status' => 'string',
+    'status' => 'string',
+    "published" => 'boolean'
+));
+*/
+
+
+$row = Lazer::table('projects');
+
+$row->set($payload);
+$row->save();
+
+
+
+
+
+
+
+
+exit;
+
 /**
  * use
  */
