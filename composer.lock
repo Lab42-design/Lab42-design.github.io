@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9c36c0a0c78674fa76ecb7f259cdd61",
+    "content-hash": "627e399cd5a4368c06cf8cd13bd6f9db",
     "packages": [
         {
             "name": "payload-interop/payload-interop",
@@ -181,6 +181,63 @@
                 "source": "https://github.com/r0mdau/jisly/tree/2.0.0"
             },
             "time": "2018-03-24T10:45:58+00:00"
+        },
+        {
+            "name": "tmarois/filebase",
+            "version": "v1.0.24",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tmarois/Filebase.git",
+                "reference": "b660650472362e45f78d97cb395f09889196d164"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tmarois/Filebase/zipball/b660650472362e45f78d97cb395f09889196d164",
+                "reference": "b660650472362e45f78d97cb395f09889196d164",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.0",
+                "phpunit/phpunit": "5.*",
+                "symfony/yaml": "^3.4"
+            },
+            "suggest": {
+                "symfony/yaml": "Allows Yaml format"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Filebase\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Timothy Marois",
+                    "email": "timothymarois@gmail.com"
+                }
+            ],
+            "description": "A Simple but Powerful Flat File Database Storage.",
+            "homepage": "https://github.com/filebase/Filebase",
+            "keywords": [
+                "database",
+                "document",
+                "file",
+                "file-files",
+                "filebase",
+                "flat",
+                "flat-file",
+                "key-value",
+                "serverless"
+            ],
+            "support": {
+                "issues": "https://github.com/tmarois/Filebase/issues",
+                "source": "https://github.com/tmarois/Filebase/tree/v1.0.24"
+            },
+            "time": "2019-02-24T22:55:23+00:00"
         }
     ],
     "packages-dev": [],

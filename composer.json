@@ -19,7 +19,8 @@
         "psr/http-message": "^1.0",
         "payload-interop/payload-interop": "^1.0",
         "pmjones/auto-route": "^1.1",
-        "r0mdau/jisly": "^2.0"
+        "r0mdau/jisly": "^2.0",
+        "tmarois/filebase": "^1.0"
     },
     "scripts": {
         "serve": "@php ./bin/serve.php"
