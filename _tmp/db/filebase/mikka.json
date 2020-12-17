@@ -1,0 +1,14 @@
+{
+    "__created_at": 1608211148,
+    "__updated_at": 1608211148,
+    "data": {
+        "first_name": "mikka",
+        "last_name": "makka",
+        "email": "example@example.com",
+        "tags": [
+            "php",
+            "developer",
+            "html5"
+        ]
+    }
+}
