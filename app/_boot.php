@@ -54,8 +54,6 @@ $users = $database->where('email','LIKE','@yahoo.com')->results();
 
 
 
-exit();
-*/
 
 
 $db->title = 'kingslayer';
@@ -75,7 +73,9 @@ echo '<hr>';
 
 
 
-exit;
+exit();
+*/
+
 
 
 
