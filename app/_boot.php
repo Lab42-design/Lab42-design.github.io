@@ -39,7 +39,7 @@ $row = Lazer::table('lazarus');
 
 //$row->nickname = 'defaultman'; // or $row->setField('nickname', 'new_user')
 //$row->save();
-echo '<pre>';
+
 $result = Lazer::table('lazarus')->findAll();
 foreach($result as $row)
 {
@@ -81,8 +81,6 @@ $row->save();
 
 
 
-
-exit;
 
 /**
  * use
