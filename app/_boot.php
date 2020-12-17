@@ -42,9 +42,11 @@ $layout = $viewpath . 'layout.php';
 $request = ServerRequestCreator::createFromGlobals();
 $request_target = $request->getRequestTarget();
 
+// if request is NOT root ... then get the partial name from the $request_target
 if ($request_target != '/') {
     $view_file = '_' . ltrim($request_target, '/') . '.php';
 }
+// default to _index.php when no $request_target is provided
 $view = $viewpath . $view_file ??= '_index.php'; 
 
 
