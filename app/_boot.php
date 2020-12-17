@@ -14,7 +14,7 @@ declare(strict_types = 1);
 // FILEBASE 
 
 
-
+/*
 $database = new \Filebase\Database([
     'dir' => __DIR__ . '/../_tmp/db/filebase'
 ]);
@@ -55,9 +55,8 @@ $users = $database->where('email','LIKE','@yahoo.com')->results();
 
 
 exit();
+*/
 
-
-exit;
 
 $db->title = 'kingslayer';
 $db->save();
