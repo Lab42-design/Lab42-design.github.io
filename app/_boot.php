@@ -20,8 +20,6 @@ use Lab42\SpaceSuit\View;
 /**
  * Variables
  */
-
-// root path
 $rootpath =  __DIR__;
 
 
@@ -30,7 +28,6 @@ $rootpath =  __DIR__;
  * Views
  */
 $template = new View();
-
 $viewpath = $rootpath . '/../resources/templates/';
 $layout = $viewpath . 'layout.php';
 
@@ -89,7 +86,3 @@ $emitter->emit($response);
  * echo response
  */
 // echo($response->getBody()->getContents());
-
-
-
-// eof
