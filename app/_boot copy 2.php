@@ -3,13 +3,12 @@
 /**
  *
  * boot script
- * using Psr7 Request, Response, Payload, View and Emitter
+ * using Psr7 Request, Response, Payload and View
  *
  */
 
 declare(strict_types = 1);
 
-<<<<<<< HEAD
 
 
 
@@ -40,7 +39,7 @@ $row = Lazer::table('lazarus');
 
 //$row->nickname = 'defaultman'; // or $row->setField('nickname', 'new_user')
 //$row->save();
-
+echo '<pre>';
 $result = Lazer::table('lazarus')->findAll();
 foreach($result as $row)
 {
@@ -83,15 +82,14 @@ $row->save();
 
 
 
+exit;
+
 /**
  * use
  */
 
-=======
->>>>>>> dccc2d43444bf1a706511baacd7dde91dc93f269
 use Lab42\Http\ServerRequest\ServerRequestCreator;
 use Lab42\Http\Response\HtmlResponse;
-use Lab42\Http\Emitter\SapiEmitter as Emitter;
 use Lab42\Domain\{Payload, Status};
 use Lab42\SpaceSuit\View;
 
@@ -160,16 +158,52 @@ $response = new HtmlResponse(
 /**
  * emit response
  */
-$emitter = new Emitter();
+// echo($response->getBody()->getContents());
+
+use Lab42\Http\Emitter\SapiEmitter;
+
+$emitter = new SapiEmitter();
 $emitter->emit($response);
 
 
 
-/**
- * echo response
- */
-// echo($response->getBody()->getContents());
-
-
-
 // eof
+
+
+
+
+
+/*
+//
+use Lab42\Router\RouteCollector;
+
+//
+$handlerFn = fn(): ResponseInterface => new Response();
+
+$handler = handler();
+function handler(){
+    $response = new HtmlResponse(__FUNCTION__ . '3253245345345 sdfgdfsgdf');
+    print_r($response->getBody()->getContents());
+}
+
+//
+$router = new RouteCollector();
+
+$router->get('home', '/', $handler);
+$router->get('mikka', '/mikka', $handlerFn);
+
+$router->get('zorro', '/zorro', App\Action::class);
+
+if (!$route = $router->routes()->match($request, false)) {
+    // 404 Not Found
+    echo '404';
+};
+
+if (!$route->isAllowedMethod($request->getMethod())) {
+    echo '405';
+};
+
+// 200 OK
+return $route;
+*/
+

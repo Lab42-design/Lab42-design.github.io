@@ -336,7 +336,7 @@ trait StreamTrait
      *
      * Called when creating `Psr\Http\Message\StreamInterface` instance.
      *
-     * @param string|resource $stream String stream target or stream resource.
+     * @param mixed $stream String stream target or stream resource.
      * @param string $mode Resource mode for stream target.
      * @throws RuntimeException if the stream or file cannot be opened.
      * @throws InvalidArgumentException if the stream or resource is invalid.
@@ -344,17 +344,10 @@ trait StreamTrait
     private function init($stream, string $mode): void
     {
         if (is_string($stream)) {
-            set_error_handler(static function (int $error): bool {
-                if ($error === E_WARNING) {
-                    throw new RuntimeException('The stream or file cannot be opened.');
-                }
-                return true;
-            });
+            $stream = $stream === '' ? false : @fopen($stream, $mode);
 
-            try {
-                $stream = fopen($stream, $mode);
-            } finally {
-                restore_error_handler();
+            if ($stream === false) {
+                throw new RuntimeException('The stream or file cannot be opened.');
             }
         }
 
