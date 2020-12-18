@@ -146,11 +146,11 @@ $layout = $viewpath . 'layout.php';
 $request = Request::createFromGlobals();
 $request_target = $request->getRequestTarget();
 
-$view = $viewpath . '_404.php'; 
 
 
 
 
+//?????????????????
 // routing
 $router = new Router($request);
 
@@ -161,13 +161,13 @@ $router->addRoute('', function() {
 
 
 
-
-
+// defaults to
+$view = $viewpath . '_404.php'; 
 
 // if request is NOT root ... then get the partial name from the $request_target
-//if ($request_target != '/') {
- //   $view_file = '_' . ltrim($request_target, '/') . '.php';
-//}
+if ($request_target != '/') {
+    $view = $viewpath . $view_file = '_' . ltrim($request_target, '/') . '.php';
+}
 
 if ($request_target === '/') {
     $view = $viewpath . $view_file ??= '_index.php'; 
@@ -181,8 +181,6 @@ if ($request_target === '/') {
 $template->setLayout($layout);
 $template->setView($view);
 
-
-
 // use payload for data
 $payoad = new Payload(Status::SUCCESS, $data);
 $template->setPayload($payoad);
@@ -192,12 +190,33 @@ $template->setPayload($payoad);
 
 try {
     $rendered_view = $template->__invoke();
-    $response = new HtmlResponse(
-        $rendered_view, $statusCode = HtmlResponse::STATUS_OK
-    );
+    //$response = new HtmlResponse(
+    //    $rendered_view, $statusCode = HtmlResponse::STATUS_OK
+    //);
 } catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-    $rendered_view = '';
+    // echo 'Caught exception: ',  $e->getMessage(), "\n";
+    $view = $viewpath . '_404.php';
+    $template->setView($view);
+    $rendered_view = $template->__invoke();
+
+    $response = new HtmlResponse(
+        $rendered_view, $statusCode = HtmlResponse::STATUS_NOT_FOUND
+    );
+
+    $response = $response->withStatus(404);
+
+
+    // return $response;
+    // TODO
+    // SET HEADER 404
+    echo($response->getStatusCode());
+    echo($response->getReasonPhrase()); 
+    // echo($response = $response->withStatus(404)); 
+
+    echo($response->getBody()->getContents());
+    exit;
+
+
 }
 
 
@@ -214,12 +233,12 @@ $response = new HtmlResponse(
 /**
  * emit response
  */
-$emitter = new Emitter();
-$emitter->emit($response);
+//$emitter = new Emitter();
+//$emitter->emit($response);
 
 
 
 /**
  * echo response
  */
-// echo($response->getBody()->getContents());
+echo($response->getBody()->getContents());
