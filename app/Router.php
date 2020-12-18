@@ -1,42 +1,41 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace App;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
- * First, let's define our Router object.
+ * Simple PSR7 Router
  */
 class Router
 {
-    /**
-     * The request we're working with.
-     *
-     * @var string
-     */
-    public $request;
+    public Request $request;
 
-    /**
-     * The $routes array will contain our URI's and callbacks.
-     * @var array
-     */
     public $routes = [];
 
     /**
      * For this example, the constructor will be responsible
      * for parsing the request.
      *
-     * @param array $request
+     * @param Request $request
      */
     public function __construct(Request $request)
     {
-        /**
-         * This is a very (VERY) simple example of parsing
-         * the request. We use the $_SERVER superglobal to
-         * grab the URI.
-         */
-        // $this->request $request;
-        $this->request = ltrim($request->getRequestTarget(), '/');
+        $this->request = $request;
+    }
+
+    public function getTarget() : string
+    {
+        $this->requestTarget = $this->request->getRequestTarget();
+
+        if ($this->requestTarget != '/') {
+            $this->requestTarget = ltrim($this->request->getRequestTarget(), '/');
+        }
+
+        //return $this->requestTarget;
+        return $this->requestTarget;
     }
 
     /**
@@ -69,13 +68,15 @@ class Router
      */
     public function run()
     {
-        // echo __METHOD__;
+        $this->getTarget();
 
-        // print_r( $this->hasRoute($this->request) );
 
-        if($this->hasRoute($this->request)) {
-            $this->routes[$this->request]->call($this);
+        if($this->hasRoute($this->requestTarget)) {
+            $this->routes[$this->requestTarget]->call($this);
+        } else {
+            throw new \App\RouteNotFoundException(sprintf('`%s` route was not found / 404', $this->requestTarget));
         }
+
     }
 }
 

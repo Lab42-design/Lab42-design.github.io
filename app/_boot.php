@@ -12,6 +12,7 @@ declare(strict_types = 1);
 use Lab42\Http\ServerRequest\ServerRequestCreator as Request;
 use Lab42\Http\Response\HtmlResponse;
 // use Lab42\Http\Response\Response;
+// use Lab42\Http\Message\Response;
 use Lab42\Http\Emitter\SapiEmitter as Emitter;
 use Lab42\Domain\{Payload, Status};
 use Lab42\SpaceSuit\View;
@@ -90,11 +91,8 @@ $item->tags  = ['42','demo','data'];
 // $item->save();
 
 
-$projects = $database->where('tags','IN','42')->results();
+$projects = $database->where('tags','IN','demo')->results();
 // $data = $projects;
-
-
-
 
 if (!$projects) {
     $data = [
@@ -144,7 +142,13 @@ $layout = $viewpath . 'layout.php';
  * get view file with $request->getRequestTarget()
  */
 $request = Request::createFromGlobals();
-$request_target = $request->getRequestTarget();
+// $request_target = $request->getRequestTarget();
+$request_target = ltrim($request->getRequestTarget(), '/');
+
+//print_r('req target ___' . $request_target . '___');
+//var_dump($request_target);
+
+
 
 
 
@@ -154,27 +158,71 @@ $request_target = $request->getRequestTarget();
 // routing
 $router = new Router($request);
 
-$router->addRoute('', function() {
-    echo 'Well, hello there!!';
-    $view = $viewpath . '_index.php';
+$router->addRoute('routetest', function() {
+    //print_r($this->routes['routetest'] );
 });
 
 
+$router->addRoute('/', function() {
+    $xx =  'Well, hello ehh //////// there!!';
+    // $view = $viewpath . '_index.php';
+    //print_r($xx );
 
-// defaults to
+});
+
+$router->addRoute('zorromorro', function() {
+    $xx =  'Well, hello there!!';
+    // $view = $viewpath . '_index.php';
+
+    $response = new HtmlResponse(
+        $xx, 404
+    );
+    emitResponse($response);
+
+});
+
+$router->addRoute('ehh', function() {
+   // $xx =  'Well, hello ehh there!!';
+    // $view = $viewpath . '_index.php';
+   // echo '<pre>' . $xx;
+   // print_r($this->getTarget());
+});
+
+
+// print_r($router);
+
+
+
+try {
+
+    $router->run();
+
+} catch (Exception $e) {
+
+    $msg = 'Caught exception: ' .  $e->getMessage() . "\n";
+
+    $responseX = new HtmlResponse(
+        '___ ' . $msg, $statusCode = HtmlResponse::STATUS_NOT_FOUND
+    );
+    emitResponse($responseX);
+
+}
+
+
+
+
+// defaults to 404
 $view = $viewpath . '_404.php'; 
 
-// if request is NOT root ... then get the partial name from the $request_target
-if ($request_target != '/') {
-    $view = $viewpath . $view_file = '_' . ltrim($request_target, '/') . '.php';
-}
-
-if ($request_target === '/') {
+if (empty($request_target)) {
+    // default to _index.php when no $request_target is provided
     $view = $viewpath . $view_file ??= '_index.php'; 
+} else {
+    $view = $viewpath . $view_file = '_' . $request_target . '.php';
 }
 
-// default to _index.php when no $request_target is provided
-// $view = $viewpath . $view_file ??= '_index.php'; 
+
+
 
 
 // set layout amd view
@@ -189,64 +237,53 @@ $template->setPayload($payoad);
 // $rendered_view = $template->__invoke();
 
 
-use Lab42\Http\Message\Response;
+
+/**
+ * response
+ */
 
 try {
     $rendered_view = $template->__invoke();
-    //$response = new HtmlResponse(
-    //    $rendered_view, $statusCode = HtmlResponse::STATUS_OK
-    //);
+
+    $response = new HtmlResponse(
+        $rendered_view, $statusCode = HtmlResponse::STATUS_OK
+    );
+    emitResponse($response);
+
 } catch (Exception $e) {
+
     // echo 'Caught exception: ',  $e->getMessage(), "\n";
     $view = $viewpath . '_404.php';
     $template->setView($view);
     $rendered_view = $template->__invoke();
 
-    $err = '<pre></pre>';
-
     $response = new HtmlResponse(
         $rendered_view, $statusCode = HtmlResponse::STATUS_NOT_FOUND
     );
-    //$response = new HtmlResponse('<p>HTML</p>', 404, ['Content-Type' => 'text/plain; charset=UTF-8'], '2');
 
-
-
-    //$response = new Response(404, ['Content-Language' => 'en'], 'php://memory', '2');
-    // 
-    // $newResponse = $response->withStatus(404, 'Custom Phrase');
-
-
-    $emitter = new Emitter();
-    $emitter->emit($response);
-    // return $response;
-    // TODO
-    // SET HEADER 404
-   // echo($response->getStatusCode());
-  //  echo($response->getReasonPhrase()); 
-    // echo($response = $response->withStatus(404)); 
-
-  //  echo($response->getBody()->getContents());
- 
-
+    emitResponse($response);
 
 }
 
 
 
-/**
- * response
- */
-$response = new HtmlResponse(
-    $rendered_view, $statusCode = HtmlResponse::STATUS_OK
-);
+
+
 
 
 
 /**
  * emit response
  */
-$emitter = new Emitter();
-$emitter->emit($response);
+function emitResponse($response)
+{
+    $emitter = new Emitter();
+    $emitter->emit($response);
+}
+
+
+
+
 
 
 
