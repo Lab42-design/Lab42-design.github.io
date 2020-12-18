@@ -11,7 +11,7 @@ declare(strict_types = 1);
 
 use Lab42\Http\ServerRequest\ServerRequestCreator as Request;
 use Lab42\Http\Response\HtmlResponse;
-use Lab42\Http\Response\Response;
+// use Lab42\Http\Response\Response;
 use Lab42\Http\Emitter\SapiEmitter as Emitter;
 use Lab42\Domain\{Payload, Status};
 use Lab42\SpaceSuit\View;
@@ -188,6 +188,9 @@ $template->setPayload($payoad);
 // render view to $var
 // $rendered_view = $template->__invoke();
 
+
+use Lab42\Http\Message\Response;
+
 try {
     $rendered_view = $template->__invoke();
     //$response = new HtmlResponse(
@@ -199,22 +202,31 @@ try {
     $template->setView($view);
     $rendered_view = $template->__invoke();
 
+    $err = '<pre></pre>';
+
     $response = new HtmlResponse(
         $rendered_view, $statusCode = HtmlResponse::STATUS_NOT_FOUND
     );
+    //$response = new HtmlResponse('<p>HTML</p>', 404, ['Content-Type' => 'text/plain; charset=UTF-8'], '2');
 
-    $response = $response->withStatus(404);
 
 
+    //$response = new Response(404, ['Content-Language' => 'en'], 'php://memory', '2');
+    // 
+    // $newResponse = $response->withStatus(404, 'Custom Phrase');
+
+
+    $emitter = new Emitter();
+    $emitter->emit($response);
     // return $response;
     // TODO
     // SET HEADER 404
-    echo($response->getStatusCode());
-    echo($response->getReasonPhrase()); 
+   // echo($response->getStatusCode());
+  //  echo($response->getReasonPhrase()); 
     // echo($response = $response->withStatus(404)); 
 
-    echo($response->getBody()->getContents());
-    exit;
+  //  echo($response->getBody()->getContents());
+ 
 
 
 }
@@ -233,12 +245,12 @@ $response = new HtmlResponse(
 /**
  * emit response
  */
-//$emitter = new Emitter();
-//$emitter->emit($response);
+$emitter = new Emitter();
+$emitter->emit($response);
 
 
 
 /**
  * echo response
  */
-echo($response->getBody()->getContents());
+// echo($response->getBody()->getContents());
