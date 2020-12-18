@@ -15,7 +15,10 @@ $database = new \Filebase\Database([
     'dir' => __DIR__ . '/../_tmp/db/filebase'
 ]);
 
-
+// in this example, you would search an exact user name
+// it would technically be stored as user_name.json in the directories
+// if user_name.json doesn't exists get will return new empty Document
+$item = $database->get('mikka');
 
 // create a project
 $item = $database->get('project_35345345');
@@ -25,8 +28,36 @@ $item->body = '6654 6233 3343 4444 3';
 $item->tags  = ['42','demo','data'];
 // $item->save();
 
+// set data for view
+// check if a record exists and do something if it does or does not
+if ($database->has('project_42X')) {
+    // do some action
+    // echo $item->first_name . '<br/>';
+    // echo $item->last_name . '<br/>';;
+    // echo $item->email . '<br/>';;
+    $projects = $database->where('tags','IN','42')->results();
 
-$projects = $database->where('tags','IN','demo')->results();
+    //print_r(count($projects));
+    // exit;
+
+    // check if rray has more then 1 items
+
+    if (count($projects, COUNT_RECURSIVE) > 1) {
+        $data = $projects;
+    } else {
+        $data = $projects[0];
+    }
+    // $data = $projects;
+    // Need to find all the users that have a tag for "php" ?
+    // $projects = $database->where('tags','IN','42')->results();
+} else {
+    //$data = [
+    //    'message' => 'hello world',
+    //    'text' => 'this is lab42.design'
+    //];
+}
+
+$projects = $database->where('tags','IN','42')->results();
 // $data = $projects;
 
 
