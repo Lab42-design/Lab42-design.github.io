@@ -1,0 +1,12 @@
+{
+    "__created_at": 1608276639,
+    "__updated_at": 1608276639,
+    "data": {
+        "message": "hello world",
+        "subtitle": "this is lab42.design",
+        "tags": [
+            "42",
+            "demo"
+        ]
+    }
+}

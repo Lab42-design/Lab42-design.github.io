@@ -19,34 +19,71 @@ $database = new \Filebase\Database([
 // it would technically be stored as user_name.json in the directories
 // if user_name.json doesn't exists get will return new empty Document
 $item = $database->get('mikka');
-// display property values
 
-
-// change existing or add new properties
-$item->first_name = 'mikka';
-$item->last_name = 'morro';
-$item->email = 'example@gmail.com';
-$item->tags  = ['php','developer','html5'];
-// need to save? thats easy!
+// create a project
+$item = $database->get('project_35345345');
+$item->title = 'project_35345345';
+$item->subtitle = 'ehhh';
+$item->body = '6654 6233 3343 4444 3';
+$item->tags  = ['42','demo','data'];
 // $item->save();
 
-
+// set data for view
 // check if a record exists and do something if it does or does not
-if ($database->has('mikka'))
-{
+if ($database->has('project_42X')) {
     // do some action
     // echo $item->first_name . '<br/>';
     // echo $item->last_name . '<br/>';;
     // echo $item->email . '<br/>';;
+    $projects = $database->where('tags','IN','42')->results();
+
+    //print_r(count($projects));
+    // exit;
+
+    // check if rray has more then 1 items
+
+    if (count($projects, COUNT_RECURSIVE) > 1) {
+        $data = $projects;
+    } else {
+        $data = $projects[0];
+    }
+    // $data = $projects;
+    // Need to find all the users that have a tag for "php" ?
+    // $projects = $database->where('tags','IN','42')->results();
+} else {
+    //$data = [
+    //    'message' => 'hello world',
+    //    'text' => 'this is lab42.design'
+    //];
 }
 
-// Need to find all the users that have a tag for "php" ?
-$users = $database->where('tags','IN','php')->results();
+$projects = $database->where('tags','IN','42')->results();
+// $data = $projects;
+
+
+
+
+if (!$projects) {
+    $data = [
+        'message' => 'hello world',
+        'text' => 'this is lab42.design'
+    ];
+} 
+
+if (count($projects) > 1) {
+    $data = $projects;
+} else {
+    $data = $projects[0];
+}
+
+
+
+
+
+
 
 // Need to search for all the users who use @yahoo.com email addresses?
-$users = $database->where('email','LIKE','@gmail.com')->results();
-
-
+// $projects = $database->where('email','LIKE','@gmail.com')->results();
 
 
 
@@ -94,12 +131,7 @@ $view = $viewpath . $view_file ??= '_index.php';
 $template->setLayout($layout);
 $template->setView($view);
 
-// set data for view
-$data = [
-    'message' => 'hello world',
-    'text' => 'this is lab42.design',
-    'filebase' => $users
-];
+
 
 // use payload for data
 $payoad = new Payload(Status::SUCCESS, $data);
