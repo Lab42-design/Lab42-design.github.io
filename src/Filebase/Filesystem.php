@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Filebase;
 
 class Filesystem
@@ -100,13 +102,13 @@ class Filesystem
      *
      * @return array An array, item is a file
      */
-    public static function getAllFiles($path = '',$ext = 'json')
+    public static function getAllFiles($path = '', $ext = 'json')
     {
         $files = [];
         $_files = glob($path.'*.'.$ext);
         foreach($_files as $file)
         {
-            $files[] = str_replace('.'.$ext,'',basename($file));
+            $files[] = str_replace('.'.$ext,'', basename($file));
         }
 
         return $files;

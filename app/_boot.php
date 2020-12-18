@@ -9,12 +9,76 @@
 
 declare(strict_types = 1);
 
+use Lab42\Http\ServerRequest\ServerRequestCreator as Request;
+use Lab42\Http\Response\HtmlResponse;
+use Lab42\Http\Response\Response;
+use Lab42\Http\Emitter\SapiEmitter as Emitter;
+use Lab42\Domain\{Payload, Status};
+use Lab42\SpaceSuit\View;
+use Filebase\Database;
+
+use App\Router;
+
+
+
+
+
+$request = Request::createFromGlobals();
+
+/**
+ * Create a new router instance.
+ */
+// $router = new App\Router($_SERVER);
+// $router = new App\Router($request);
+
+
+
+
+/**
+ * Add a "hello" route that prints to the screen.
+ */
+/*
+$router->addRoute('k', function() {
+    echo 'Well, hello there!! ROT';
+});
+$router->addRoute('hello', function() {
+    echo 'Well, hello there!!';
+});
+*/
+
+// print_r($router);
+
+
+
+/**
+ * Run it!
+ */
+// $router->run();
+
+
+
+
+
+
+
+
 // FILEBASE 
-
-$database = new \Filebase\Database([
-    'dir' => __DIR__ . '/../_tmp/db/filebase'
+$database = new Database([
+    'dir' => __DIR__ . '/../_tmp/db',
+    // 'backupLocation' => 'path/to/database/backup/dir',
+    'format'         => \Filebase\Format\Json::class,
+    'cache'          => true,
+    'cache_expires'  => 1800,
+    'pretty'         => true,
+    'safe_filename'  => true,
+    'read_only'      => false,
+    'validate' => [
+        'title'   => [
+            'valid.type' => 'string',
+            'valid.required' => true
+        ]
+    ]
 ]);
-
 
 
 // create a project
@@ -26,7 +90,7 @@ $item->tags  = ['42','demo','data'];
 // $item->save();
 
 
-$projects = $database->where('tags','IN','demo')->results();
+$projects = $database->where('tags','IN','42')->results();
 // $data = $projects;
 
 
@@ -56,12 +120,7 @@ if (count($projects) > 1) {
 
 
 
-use Lab42\Http\ServerRequest\ServerRequestCreator as Request;
-use Lab42\Http\Response\HtmlResponse;
-use Lab42\Http\Response\Response;
-use Lab42\Http\Emitter\SapiEmitter as Emitter;
-use Lab42\Domain\{Payload, Status};
-use Lab42\SpaceSuit\View;
+
 
 
 
@@ -87,13 +146,35 @@ $layout = $viewpath . 'layout.php';
 $request = Request::createFromGlobals();
 $request_target = $request->getRequestTarget();
 
-// if request is NOT root ... then get the partial name from the $request_target
-if ($request_target != '/') {
-    $view_file = '_' . ltrim($request_target, '/') . '.php';
-}
-// default to _index.php when no $request_target is provided
-$view = $viewpath . $view_file ??= '_index.php'; 
+$view = $viewpath . '_404.php'; 
 
+
+
+
+// routing
+$router = new Router($request);
+
+$router->addRoute('', function() {
+    echo 'Well, hello there!!';
+    $view = $viewpath . '_index.php';
+});
+
+
+
+
+
+
+// if request is NOT root ... then get the partial name from the $request_target
+//if ($request_target != '/') {
+ //   $view_file = '_' . ltrim($request_target, '/') . '.php';
+//}
+
+if ($request_target === '/') {
+    $view = $viewpath . $view_file ??= '_index.php'; 
+}
+
+// default to _index.php when no $request_target is provided
+// $view = $viewpath . $view_file ??= '_index.php'; 
 
 
 // set layout amd view
@@ -107,7 +188,17 @@ $payoad = new Payload(Status::SUCCESS, $data);
 $template->setPayload($payoad);
 
 // render view to $var
-$rendered_view = $template->__invoke();
+// $rendered_view = $template->__invoke();
+
+try {
+    $rendered_view = $template->__invoke();
+    $response = new HtmlResponse(
+        $rendered_view, $statusCode = HtmlResponse::STATUS_OK
+    );
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+    $rendered_view = '';
+}
 
 
 

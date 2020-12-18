@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Filebase\Format;
 
 use Symfony\Component\Yaml\Yaml as YamlParser;

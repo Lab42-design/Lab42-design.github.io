@@ -17,8 +17,7 @@
     },
     "require": {
         "psr/http-message": "^1.0",
-        "payload-interop/payload-interop": "^1.0",
-        "tmarois/filebase": "^1.0"
+        "payload-interop/payload-interop": "^1.0"
     },
     "scripts": {
         "serve": "@php ./bin/serve.php"
